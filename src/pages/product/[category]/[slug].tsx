@@ -655,37 +655,65 @@ const otherProducts = useMemo(() => {
 }
 
 
-export async function getStaticPaths() {
- const apiBase = "https://bhababackend.onrender.com";
-//     const isBrowser = typeof window !== 'undefined';
-// const isLocalhost = isBrowser && window.location.hostname === 'localhost';
+// export async function getStaticPaths() {
+//  const apiBase = "https://bhababackend.onrender.com";
+// //     const isBrowser = typeof window !== 'undefined';
+// // const isLocalhost = isBrowser && window.location.hostname === 'localhost';
 
-//   const apiBase = (
-//   isLocalhost
-//     ? 'http://localhost:5000'
-//     : 'http://192.168.1.165:5000'
-// );
+// //   const apiBase = (
+// //   isLocalhost
+// //     ? 'http://localhost:5000'
+// //     : 'http://192.168.1.165:5000'
+// // );
   
+  
+//   try {
+//     const products = await fetchWithRetry<Product[]>(`${apiBase}/products`)
+
+//     // const paths = products.map((product) => ({
+//     //   params: {
+//     //     category: product.categoryName.toLowerCase().replace(/\s+/g, '-'),
+//     //     slug: `${slugify(product.product_name)}_${product.id}`
+//     //   }
+//     // }))
+
+//     const paths = products
+//   .filter(product => product.categoryName && product.product_name && product.id) // Only valid products
+//   .map((product) => ({
+//     params: {
+//       category: product.categoryName.toLowerCase().replace(/\s+/g, '-'),
+//       slug: `${slugify(product.product_name)}_${product.id}`
+//     }
+//   }))
+
+
+//     return { paths, fallback: 'blocking' }
+//   } catch (error) {
+//     console.error('Error generating paths:', error)
+//     return { paths: [], fallback: 'blocking' }
+//   }
+// }
+
+export async function getStaticPaths() {
+  const apiBase = "https://bhababackend.onrender.com";
   
   try {
     const products = await fetchWithRetry<Product[]>(`${apiBase}/products`)
-
-    // const paths = products.map((product) => ({
-    //   params: {
-    //     category: product.categoryName.toLowerCase().replace(/\s+/g, '-'),
-    //     slug: `${slugify(product.product_name)}_${product.id}`
-    //   }
-    // }))
+    
+    // Ensure products is an array before calling filter
+    if (!Array.isArray(products)) {
+      console.error('Products response is not an array:', products)
+      return { paths: [], fallback: 'blocking' }
+    }
 
     const paths = products
-  .filter(product => product.categoryName && product.product_name && product.id) // Only valid products
-  .map((product) => ({
-    params: {
-      category: product.categoryName.toLowerCase().replace(/\s+/g, '-'),
-      slug: `${slugify(product.product_name)}_${product.id}`
-    }
-  }))
-
+      .filter(product => product.categoryName && product.product_name && product.id) // Only valid products
+      .map((product) => ({
+        params: {
+          category: product.categoryName.toLowerCase().replace(/\s+/g, '-'),
+          slug: `${slugify(product.product_name)}_${product.id}`
+        }
+      }))
 
     return { paths, fallback: 'blocking' }
   } catch (error) {
@@ -747,4 +775,5 @@ export async function getStaticProps({ params }: { params: { category: string, s
 }
 
 export default ProductDetail
+
 
