@@ -81,7 +81,7 @@ const ProductDetail: NextPage<ProductDetailProps> = ({ products: initialProducts
 
 
   useEffect(() => {
-     const apiBase = "https://bhabaapi.onrender.com";
+     const apiBase = "https://bhababackend.onrender.com";
     // Fetch product details if not found in initial props
     if (!product && productId) {
       const fetchProduct = async () => {
@@ -180,8 +180,6 @@ const ProductDetail: NextPage<ProductDetailProps> = ({ products: initialProducts
   //   ).slice(0, 120) // Reduced from 400 to 12 for better performance
   // }, [filteredProducts, product])
 
-
-  // In src/pages/product/[category]/[slug].tsx - Replace the existing relatedProducts and otherProducts useMemo
 
 const relatedProducts = useMemo(() => {
   if (!product) return []
@@ -616,10 +614,10 @@ const otherProducts = useMemo(() => {
          {/* Legal Links Section - Add this section */}
       <div className="mt-12 border-t pt-8">
         <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
-          <Link href="/privacy-policy" className="hover:text-blue-600 transition-colors">
+          <Link href="/privacy-policy-full" className="hover:text-blue-600 transition-colors">
             Privacy Policy
           </Link>
-          <Link href="/terms-of-service" className="hover:text-blue-600 transition-colors">
+          <Link href="/terms-of-service-full" className="hover:text-blue-600 transition-colors">
             Terms of Service
           </Link>
           {/* <a 
@@ -658,7 +656,7 @@ const otherProducts = useMemo(() => {
 
 
 export async function getStaticPaths() {
- const apiBase = "https://bhabaapi.onrender.com";
+ const apiBase = "https://bhababackend.onrender.com";
 //     const isBrowser = typeof window !== 'undefined';
 // const isLocalhost = isBrowser && window.location.hostname === 'localhost';
 
@@ -698,7 +696,7 @@ export async function getStaticPaths() {
 
 
 export async function getStaticProps({ params }: { params: { category: string, slug: string } }) {
-  const apiBase = "http://localhost:5000";
+  const apiBase = "https://bhababackend.onrender.com";
 //       const isBrowser = typeof window !== 'undefined';
 // const isLocalhost = isBrowser && window.location.hostname === 'localhost';
 
@@ -749,3 +747,4 @@ export async function getStaticProps({ params }: { params: { category: string, s
 }
 
 export default ProductDetail
+
